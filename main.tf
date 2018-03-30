@@ -1,13 +1,19 @@
 provider "scaleway" {}
 
+locals {
+  arch = "x86_64"
+  type = "VC1S"
+}
+
 data "scaleway_image" "ubuntu" {
-  architecture = "arm64"
+  architecture = "${local.arch}"
   name         = "Ubuntu Xenial"
 }
 
 module "master" {
   source   = "modules/master"
   image_id = "${data.scaleway_image.ubuntu.id}"
+  type     = "${local.type}"
 }
 
 output "master-ip" {
@@ -19,6 +25,7 @@ module "minion-1" {
   name         = "k8s-minion-1"
   image_id     = "${data.scaleway_image.ubuntu.id}"
   join_command = "${module.master.join_command}"
+  type         = "${local.type}"
 }
 
 module "minion-2" {
@@ -26,6 +33,7 @@ module "minion-2" {
   name         = "k8s-minion-2"
   image_id     = "${data.scaleway_image.ubuntu.id}"
   join_command = "${module.master.join_command}"
+  type         = "${local.type}"
 }
 
 module "minion-3" {
@@ -33,4 +41,5 @@ module "minion-3" {
   name         = "k8s-minion-3"
   image_id     = "${data.scaleway_image.ubuntu.id}"
   join_command = "${module.master.join_command}"
+  type         = "${local.type}"
 }

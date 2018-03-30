@@ -1,4 +1,5 @@
 variable "image_id" {}
+variable "type" {}
 
 resource "scaleway_ip" "k8s-master-ip" {
   server = "${scaleway_server.k8s-master.id}"
@@ -7,7 +8,7 @@ resource "scaleway_ip" "k8s-master-ip" {
 resource "scaleway_server" "k8s-master" {
   name  = "k8s-master"
   image = "${var.image_id}"
-  type  = "ARM64-2GB"
+  type  = "${var.type}"
 }
 
 resource "null_resource" "master-provisioner" {

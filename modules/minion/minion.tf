@@ -1,6 +1,7 @@
 variable "image_id" {}
 variable "join_command" {}
 variable "name" {}
+variable "type" {}
 
 resource "scaleway_ip" "k8s-minion-ip" {
   server = "${scaleway_server.k8s-minion.id}"
@@ -9,7 +10,7 @@ resource "scaleway_ip" "k8s-minion-ip" {
 resource "scaleway_server" "k8s-minion" {
   name  = "${var.name}"
   image = "${var.image_id}"
-  type  = "ARM64-2GB"
+  type  = "${var.type}"
 }
 
 resource "null_resource" "minion-provisioner" {
