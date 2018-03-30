@@ -52,7 +52,7 @@ resource "null_resource" "download-config" {
 
 resource "null_resource" "remove-old-join" {
   provisioner "local-exec" {
-    command = "rm ${path.module}/../../.secret/join_command"
+    command = "rm -f ${path.module}/../../.secret/join_command"
   }
 }
 
